@@ -105,3 +105,4 @@ describe('Web Application Asset & Structure Integrity Tests', () => {
     assert.ok(html.includes('app.js'), 'HTML must include app.js');
   });
 });
+

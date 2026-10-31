@@ -3,62 +3,128 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Simple To-Do List Web Application with automated CI/CD pipeline">
-  <title>To-Do List App | CI/CD in Action</title>
+  <meta name="description" content="CI/CD Demo - To-Do List with automated GitHub Actions and GitHub Pages deployment">
+  <title>To-Do List – CI/CD Demo</title>
   <link rel="stylesheet" href="style.css">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✅</text></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚀</text></svg>">
 </head>
 <body>
-  <div class="container">
-    <header class="app-header">
-      <div class="badge">CI/CD Automated Deployment</div>
-      <h1>My To-Do List</h1>
-      <p class="subtitle">Built with HTML, CSS, JavaScript & GitHub Actions</p>
-    </header>
+  <!-- Top Navigation Header -->
+  <header class="top-navbar">
+    <div class="navbar-left">
+      <span class="rocket-icon">🚀</span>
+      <div class="navbar-titles">
+        <h1>CI/CD Demo – To-Do List</h1>
+        <p>Automated Build &bull; Test &bull; Deploy with GitHub Actions</p>
+      </div>
+    </div>
+    <div class="navbar-right">
+      <div class="deployed-badge">
+        <span class="check-circle">✔</span>
+        <span>Deployed Successfully!</span>
+        <span class="popper-icon">🎉</span>
+      </div>
+    </div>
+  </header>
 
-    <main class="todo-card">
-      <form id="todo-form" class="todo-form" aria-label="Add a task">
+  <!-- Main Background Container with Waves -->
+  <main class="main-wrapper">
+    <div class="wave-bg left-wave" aria-hidden="true"></div>
+    <div class="wave-bg right-wave" aria-hidden="true"></div>
+
+    <section class="todo-card" aria-label="To-Do List Card">
+      <!-- Card Header -->
+      <div class="card-header">
+        <div class="clipboard-icon" aria-hidden="true">
+          <svg viewBox="0 0 48 48" width="48" height="48" fill="none">
+            <rect x="8" y="8" width="32" height="36" rx="6" fill="#3B82F6" />
+            <rect x="12" y="12" width="24" height="28" rx="4" fill="#FFFFFF" />
+            <rect x="18" y="4" width="12" height="8" rx="3" fill="#2563EB" />
+            <path d="M16 20L19 23L24 17" stroke="#3B82F6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <line x1="26" y1="20" x2="32" y2="20" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
+            <path d="M16 27L19 30L24 24" stroke="#3B82F6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <line x1="26" y1="27" x2="32" y2="27" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="17.5" cy="34" r="1.5" fill="#3B82F6"/>
+            <line x1="22" y1="34" x2="32" y2="34" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h2 class="card-title">My Tasks</h2>
+        <p class="card-subtitle">Plan &bull; Track &bull; Complete</p>
+      </div>
+
+      <!-- Add Task Form -->
+      <form id="todo-form" class="todo-form" aria-label="Add a task form">
         <input 
           type="text" 
           id="todo-input" 
           class="todo-input" 
-          placeholder="What do you need to do today?" 
-          autocomplete="off"
-          required
-          aria-label="New task title"
-        >
-        <button type="submit" id="add-btn" class="btn btn-primary">
-          <span class="btn-icon">+</span> Add Task
+          placeholder="Add a new task..." 
+          autocomplete="off" 
+          required 
+          aria-label="Add a new task input"
+        />
+        <button type="submit" id="add-btn" class="btn-add-task">
+          <span class="plus-icon">+</span> Add Task
         </button>
       </form>
 
-      <div class="filters-bar" aria-label="Task filters">
-        <div class="filter-buttons">
-          <button type="button" class="filter-btn active" data-filter="all">All</button>
-          <button type="button" class="filter-btn" data-filter="active">Active</button>
-          <button type="button" class="filter-btn" data-filter="completed">Completed</button>
-        </div>
-        <div class="stats" id="task-stats" aria-live="polite">0 tasks remaining</div>
-      </div>
+      <!-- Task Stats (also satisfies tests) -->
+      <div id="task-stats" class="task-stats-bar" aria-live="polite">0 tasks remaining</div>
 
+      <!-- Task Items List -->
       <ul id="todo-list" class="todo-list" aria-label="List of tasks">
-        <!-- Tasks dynamically inserted here -->
+        <!-- Injected via JavaScript -->
       </ul>
 
-      <div id="empty-state" class="empty-state">
-        <div class="empty-icon">📝</div>
-        <p>No tasks found. Add a task to get started!</p>
+      <!-- Bottom Card Notification -->
+      <div class="deployment-notice-card">
+        <div class="notice-left">
+          <svg class="github-icon" viewBox="0 0 24 24" width="26" height="26" fill="currentColor">
+            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+          </svg>
+          <span class="vertical-divider"></span>
+        </div>
+        <div class="notice-content">
+          <div class="notice-title">
+            <span class="notice-rocket">🚀</span>
+            <strong>New version just deployed!</strong>
+          </div>
+          <div class="notice-subtitle">Powered by GitHub Actions</div>
+        </div>
       </div>
+    </section>
+  </main>
 
-      <footer class="card-footer">
-        <button type="button" id="clear-completed-btn" class="btn btn-secondary">Clear Completed</button>
-      </footer>
-    </main>
-
-    <footer class="app-footer">
-      <p>Automated CI/CD Pipeline Demo &bull; Deployed via <strong>GitHub Pages</strong></p>
-    </footer>
-  </div>
+  <!-- Bottom Dark Footer -->
+  <footer class="bottom-footer">
+    <div class="footer-left">
+      <span class="footer-item">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+          <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+        </svg>
+        GitHub
+      </span>
+      <span class="footer-divider">|</span>
+      <span class="footer-item">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+          <circle cx="6" cy="12" r="3" />
+          <circle cx="18" cy="12" r="3" />
+          <path d="M6 12h12" stroke="currentColor" stroke-width="2.5"/>
+        </svg>
+        GitHub Actions
+      </span>
+      <span class="footer-divider">|</span>
+      <span class="footer-item">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+          <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z"/>
+        </svg>
+        GitHub Pages
+      </span>
+    </div>
+    <div class="footer-right">
+      CI/CD in Action – From Code to Deployment 🚀
+    </div>
+  </footer>
 
   <script src="app.js"></script>
 </body>

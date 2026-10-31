@@ -1,6 +1,6 @@
 /**
- * Simple To-Do List Application
- * Core Logic & DOM Bindings
+ * CI/CD Demo - To-Do List Application
+ * Matches the Visual Pitch Deck Design & Functional Requirements
  */
 
 // Core Data Operations (Pure Functions for testing and reusability)
@@ -8,9 +8,10 @@ const TodoLogic = {
   /**
    * Creates a new todo item object
    * @param {string} text - Title of the task
+   * @param {boolean} completed - Initial completion state
    * @returns {Object} New task object
    */
-  createTask(text) {
+  createTask(text, completed = false) {
     const trimmed = (text || '').trim();
     if (!trimmed) {
       throw new Error('Task text cannot be empty');
@@ -18,7 +19,7 @@ const TodoLogic = {
     return {
       id: 'task_' + Date.now() + '_' + Math.random().toString(36).substring(2, 7),
       text: trimmed,
-      completed: false,
+      completed: Boolean(completed),
       createdAt: new Date().toISOString()
     };
   },
@@ -89,28 +90,36 @@ const TodoLogic = {
 
 // Browser DOM Controller
 if (typeof window !== 'undefined') {
-  const STORAGE_KEY = 'todo_app_tasks_v1';
+  const STORAGE_KEY = 'todo_cicd_demo_tasks_v2';
+
+  // Default tasks matching the screenshot sample
+  const DEFAULT_TASKS = [
+    { id: 'task_default_1', text: 'Learn CI/CD with GitHub Actions', completed: true },
+    { id: 'task_default_2', text: 'Build a To-Do List Project', completed: false },
+    { id: 'task_default_3', text: 'Deploy Automatically', completed: false }
+  ];
 
   let tasks = [];
-  let currentFilter = 'all';
 
   // DOM Elements
   const todoForm = document.getElementById('todo-form');
   const todoInput = document.getElementById('todo-input');
   const todoList = document.getElementById('todo-list');
-  const emptyState = document.getElementById('empty-state');
   const taskStats = document.getElementById('task-stats');
-  const filterBtns = document.querySelectorAll('.filter-btn');
-  const clearCompletedBtn = document.getElementById('clear-completed-btn');
 
   // Load from LocalStorage
   function loadTasks() {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
-      tasks = saved ? JSON.parse(saved) : [];
+      if (saved) {
+        tasks = JSON.parse(saved);
+      } else {
+        tasks = DEFAULT_TASKS;
+        saveTasks();
+      }
     } catch (e) {
       console.error('Failed to load tasks from localStorage', e);
-      tasks = [];
+      tasks = DEFAULT_TASKS;
     }
   }
 
@@ -123,49 +132,50 @@ if (typeof window !== 'undefined') {
     }
   }
 
-  // Render UI
+  // Render UI matching the screenshot
   function render() {
-    const filtered = TodoLogic.filterTasks(tasks, currentFilter);
     todoList.innerHTML = '';
 
-    if (filtered.length === 0) {
-      emptyState.classList.add('visible');
-    } else {
-      emptyState.classList.remove('visible');
-    }
-
-    filtered.forEach(task => {
+    tasks.forEach(task => {
       const li = document.createElement('li');
       li.className = `todo-item ${task.completed ? 'completed' : ''}`;
       li.dataset.id = task.id;
 
       li.innerHTML = `
-        <label class="todo-content" for="check-${task.id}">
-          <input 
-            type="checkbox" 
-            id="check-${task.id}" 
-            class="todo-checkbox" 
-            ${task.completed ? 'checked' : ''}
-            aria-label="Mark task as ${task.completed ? 'incomplete' : 'completed'}"
-          >
-          <span class="todo-text">${escapeHtml(task.text)}</span>
-        </label>
-        <button type="button" class="delete-btn" aria-label="Delete task ${escapeHtml(task.text)}">
-          ✕
-        </button>
+        <div class="todo-left" role="button" tabindex="0" aria-label="Toggle task ${escapeHtml(task.text)}">
+          <div class="custom-checkbox ${task.completed ? 'checked' : ''}" aria-hidden="true"></div>
+          <span class="todo-title">${escapeHtml(task.text)}</span>
+        </div>
+        <div class="todo-right">
+          <span class="status-badge ${task.completed ? 'completed' : 'pending'}">
+            ${task.completed ? 'Completed' : 'Pending'}
+          </span>
+          <button type="button" class="btn-delete" title="Delete task" aria-label="Delete task ${escapeHtml(task.text)}">
+            🗑
+          </button>
+        </div>
       `;
 
-      // Event: Toggle
-      const checkbox = li.querySelector('.todo-checkbox');
-      checkbox.addEventListener('change', () => {
+      // Event: Toggle on clicking the left portion
+      const leftSection = li.querySelector('.todo-left');
+      const toggle = () => {
         tasks = TodoLogic.toggleTask(tasks, task.id);
         saveTasks();
         render();
+      };
+
+      leftSection.addEventListener('click', toggle);
+      leftSection.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          toggle();
+        }
       });
 
-      // Event: Delete
-      const deleteBtn = li.querySelector('.delete-btn');
-      deleteBtn.addEventListener('click', () => {
+      // Event: Delete on clicking the trash icon
+      const deleteBtn = li.querySelector('.btn-delete');
+      deleteBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
         tasks = TodoLogic.deleteTask(tasks, task.id);
         saveTasks();
         render();
@@ -174,9 +184,11 @@ if (typeof window !== 'undefined') {
       todoList.appendChild(li);
     });
 
-    // Update Stats
-    const stats = TodoLogic.getStats(tasks);
-    taskStats.textContent = `${stats.active} task${stats.active === 1 ? '' : 's'} remaining`;
+    // Update accessible stats
+    if (taskStats) {
+      const stats = TodoLogic.getStats(tasks);
+      taskStats.textContent = `${stats.active} task${stats.active === 1 ? '' : 's'} remaining`;
+    }
   }
 
   function escapeHtml(text) {
@@ -185,7 +197,7 @@ if (typeof window !== 'undefined') {
     return div.innerHTML;
   }
 
-  // Initialize Event Listeners
+  // Form submit handler
   todoForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const text = todoInput.value;
@@ -197,21 +209,6 @@ if (typeof window !== 'undefined') {
     } catch (err) {
       alert(err.message);
     }
-  });
-
-  filterBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      filterBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      currentFilter = btn.dataset.filter;
-      render();
-    });
-  });
-
-  clearCompletedBtn.addEventListener('click', () => {
-    tasks = tasks.filter(t => !t.completed);
-    saveTasks();
-    render();
   });
 
   // Initial load
