@@ -4,8 +4,9 @@
   "description": "Simple To-Do List Web Application with Automated CI/CD using GitHub Actions and GitHub Pages",
   "main": "app.js",
   "scripts": {
+    "dev": "node dev-server.js",
     "test": "node --test tests/*.test.js",
-    "lint": "node -c app.js tests/*.test.js",
+    "lint": "node -c app.js dev-server.js tests/*.test.js",
     "build": "node -e \"const fs = require('fs'); ['index.html', 'style.css', 'app.js'].forEach(f => { if (!fs.existsSync(f)) throw new Error('Missing file: ' + f); }); console.log('Build validation passed: All essential assets present.');\""
   },
   "keywords": [
@@ -18,3 +19,4 @@
   "author": "Nanthakumar",
   "license": "MIT"
 }
+
