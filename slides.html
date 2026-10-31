@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CI/CD in Action – 15-Slide Presentation Deck</title>
+  <link rel="stylesheet" href="slides.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍛</text></svg>">
+</head>
+<body>
+  <!-- Header Control Bar -->
+  <header class="deck-navbar">
+    <div class="deck-nav-left">
+      <a href="index.html" class="btn-back-app">← Back to Live Demo App</a>
+      <span class="divider-v">|</span>
+      <span class="deck-event-title">SMART LINK 2026 &bull; CI/CD in Action</span>
+    </div>
+    <div class="deck-nav-center">
+      <button type="button" id="prev-btn" class="nav-btn" title="Previous Slide (Left Arrow)">◀ Prev</button>
+      <span id="slide-counter" class="slide-counter">01 / 15</span>
+      <button type="button" id="next-btn" class="nav-btn" title="Next Slide (Right Arrow)">Next ▶</button>
+    </div>
+    <div class="deck-nav-right">
+      <button type="button" id="toggle-notes-btn" class="nav-btn-secondary" title="Toggle Speaker Script (S key)">🎤 Speaker Notes</button>
+      <button type="button" id="fullscreen-btn" class="nav-btn-secondary" title="Fullscreen Mode (F key)">⛶ Fullscreen</button>
+    </div>
+  </header>
+
+  <!-- Progress Bar -->
+  <div class="deck-progress-container">
+    <div id="deck-progress-bar" class="deck-progress-bar" style="width: 6.66%;"></div>
+  </div>
+
+  <!-- Slides Container -->
+  <main class="slides-stage" id="slides-stage">
+
+    <!-- Slide 1 -->
+    <article class="slide active" data-slide="1" data-notes="Good morning everyone. Thank you to Kalasalingam Academy of Research and Education, the School of Computing and Department of CSE, and KARE IEEE ComSoc. Scan the Menti code and type ONE word: what does CI/CD mean to you?">
+      <div class="slide-header-tags">
+        <span>ORGANISED BY Kalasalingam Academy of Research and Education (KARE)</span>
+        <span>School of Computing &bull; Department of CSE &bull; KARE IEEE ComSoc (SBC34451E)</span>
+        <span class="tag-highlight">SMART LINK 2026 &bull; 31 OCT 2026 &bull; LIBRARY SEMINAR HALL</span>
+      </div>
+      <div class="slide1-grid">
+        <div class="slide1-left">
+          <h1 class="slide1-title">CI/CD in Action</h1>
+          <h2 class="slide1-sub">From code to deployment</h2>
+          <p class="speaker-byline"><strong>Venket Raj S</strong> &bull; Senior Software Engineer, Data & AI Automation</p>
+          <div class="terminal-badge">
+            <code>$ git push origin main</code>
+            <span class="badge-green">build passed &bull; tests passed &bull; deployed</span>
+          </div>
+          <div class="biryani-hero-art">
+            <img src="slides-assets/image1.png" alt="Chef" class="hero-avatar">
+            <div class="hero-courier">
+              <img src="slides-assets/image3.png" alt="Delivery Scooter" class="hero-scooter animated-scooter">
+              <div class="road-line"></div>
+            </div>
+            <img src="slides-assets/image2.png" alt="House" class="hero-house">
+          </div>
+        </div>
+        <div class="slide1-right">
+          <div class="menti-card">
+            <div class="menti-tag">BEFORE WE START</div>
+            <h3>In ONE word, what is CI/CD to you?</h3>
+            <img src="slides-assets/image4.png" alt="Menti QR Code" class="menti-qr">
+            <div class="menti-link">menti.com &bull; code <strong>2944 0020</strong></div>
+            <p class="menti-hint">No wrong answers. Funny ones welcome.</p>
+          </div>
+        </div>
+      </div>
+      <footer class="slide-footer">
+        <span class="breadcrumb">Intro &bull; History &bull; DevOps &bull; CI &bull; CD &bull; Why now &bull; Demo &bull; Close</span>
+        <span class="slide-num">01 / 15</span>
+      </footer>
+    </article>
+
+    <!-- Slide 2 -->
+    <article class="slide" data-slide="2" data-notes="Forget software for a minute. You order biryani on Swiggy or Zomato. The order is placed (requirement), chef cooks (code), someone checks the food (test), packed and sealed (build), rider picks it up (deploy), and reaches your door (production). CI/CD makes this fast, safe, and boring.">
+      <div class="section-label">THE STORY FOR TODAY</div>
+      <h2 class="slide-title-hero">Let’s order biryani instead</h2>
+      <div class="biryani-showcase">
+        <img src="slides-assets/image5.png" alt="Biryani Plate" class="biryani-plate-img">
+      </div>
+      <div class="analogy-flow-grid">
+        <div class="flow-step">
+          <img src="slides-assets/image10.png" alt="Phone" class="step-icon">
+          <h4>Order placed</h4>
+          <span class="step-sub">Requirement</span>
+        </div>
+        <div class="flow-arrow">➔</div>
+        <div class="flow-step">
+          <img src="slides-assets/image9.png" alt="Chef hat" class="step-icon">
+          <h4>Chef cooks</h4>
+          <span class="step-sub">Code</span>
+        </div>
+        <div class="flow-arrow">➔</div>
+        <div class="flow-step">
+          <img src="slides-assets/image8.png" alt="Flask" class="step-icon">
+          <h4>Quality check</h4>
+          <span class="step-sub">Test</span>
+        </div>
+        <div class="flow-arrow">➔</div>
+        <div class="flow-step">
+          <img src="slides-assets/image7.png" alt="Box" class="step-icon">
+          <h4>Pack & seal</h4>
+          <span class="step-sub">Build</span>
+        </div>
+        <div class="flow-arrow">➔</div>
+        <div class="flow-step">
+          <img src="slides-assets/image6.png" alt="Truck" class="step-icon">
+          <h4>Dispatch</h4>
+          <span class="step-sub">Deploy</span>
+        </div>
+        <div class="flow-arrow">➔</div>
+        <div class="flow-step">
+          <img src="slides-assets/image11.png" alt="Door" class="step-icon step-active-green">
+          <h4>At your door</h4>
+          <span class="step-sub">Production</span>
+        </div>
+      </div>
+      <div class="analogy-quote-card">
+        <strong>Every software release is a food delivery: make it, check it, pack it, ship it.</strong>
+        <p>Keep this picture in mind. From here on, we’ll use the real names.</p>
+      </div>
+      <footer class="slide-footer">
+        <span class="breadcrumb">Intro &bull; History &bull; DevOps &bull; CI &bull; CD &bull; Why now &bull; Demo &bull; Close</span>
+        <span class="slide-num">02 / 15</span>
+      </footer>
+    </article>
+
+    <!-- Slide 3 -->
+    <article class="slide" data-slide="3" data-notes="Quick intro. I'm Venket, Senior Software Engineer at HCLTech. Started in embedded electronics, now building enterprise AI agents. If it isn't tested and automated, it isn't done.">
+      <div class="section-label">SPEAKER INTRODUCTION</div>
+      <h2 class="slide-title-hero">Hi, I’m Venket Raj S</h2>
+      <p class="speaker-subtitle">Senior Software Engineer &bull; Data & AI Automation, HCLTech</p>
+      <div class="speaker-grid">
+        <div class="speaker-bio-box">
+          <p class="bio-statement">I build and productionize AI agents for enterprises. Getting them safely into production is where CI/CD lives every day.</p>
+          <ul class="bio-tags">
+            <li><span>⚡</span> Embedded electronics ➔ AI agents</li>
+            <li><span>🎤</span> Speaker & hackathon judge</li>
+            <li><span>🌐</span> techKoodaram community</li>
+          </ul>
+          <blockquote class="speaker-quote">
+            “From flashing chips by hand to shipping AI agents, the tools changed. The rule didn’t: <em>if it isn’t tested and automated, it isn’t done</em>.”
+            <footer>— Venket</footer>
+          </blockquote>
+        </div>
+        <div class="speaker-photos-mosaic">
+          <div class="photo-card"><img src="slides-assets/image15.jpg" alt="TechX Conf"><span>TechX Conf 2026</span></div>
+          <div class="photo-card"><img src="slides-assets/image16.jpg" alt="Cypher 2026"><span>Cypher 2026, Bengaluru</span></div>
+          <div class="photo-card"><img src="slides-assets/image17.jpg" alt="Vel Tech Talk"><span>Vel Tech: AI Agents & LLMs</span></div>
+          <div class="photo-card"><img src="slides-assets/image18.jpg" alt="Claude Community"><span>Claude Community</span></div>
+        </div>
+      </div>
+      <footer class="slide-footer">
+        <span class="breadcrumb">Intro &bull; History &bull; DevOps &bull; CI &bull; CD &bull; Why now &bull; Demo &bull; Close</span>
+        <span class="slide-num">03 / 15</span>
+      </footer>
+    </article>
+
+    <!-- Slide 4 -->
+    <article class="slide" data-slide="4" data-notes="Waterfall: Requirements, design, build, test, deploy, maintain. One after another like water falling down steps. Testing happens around month 14 of 18, when fixing bugs costs the most.">
+      <div class="section-label">01 &bull; HOW SOFTWARE USED TO SHIP</div>
+      <h2 class="slide-title-hero">Waterfall: one big release a year</h2>
+      <div class="waterfall-container">
+        <div class="stair-step step-req">Requirements</div>
+        <div class="stair-step step-des">Design</div>
+        <div class="stair-step step-bld">Build</div>
+        <div class="stair-step step-tst danger-glow">Test &bull; ⚠️ Month 14</div>
+        <div class="stair-step step-dep">Deploy</div>
+        <div class="stair-step step-mnt">Maintain &bull; Month 18</div>
+      </div>
+      <div class="callout-banner alert-warning">
+        <strong>Bugs show up at Test, around month 14, when fixing them costs the most.</strong>
+        <p>One long sequence. No going back up. Feedback arrives only at the very end.</p>
+      </div>
+      <footer class="slide-footer">
+        <span class="breadcrumb">Intro &bull; History &bull; DevOps &bull; CI &bull; CD &bull; Why now &bull; Demo &bull; Close</span>
+        <span class="slide-num">04 / 15</span>
+      </footer>
+    </article>
+
+    <!-- Slide 5 -->
+    <article class="slide" data-slide="5" data-notes="Agile sped up coding, not shipping. Teams worked in 2-week sprints, but Ops only released once a quarter. Done meant done coding, not running in front of users.">
+      <div class="section-label">01 &bull; HOW SOFTWARE USED TO SHIP</div>
+      <h2 class="slide-title-hero">Agile sped up coding, not shipping</h2>
+      <div class="agile-bottleneck-grid">
+        <div class="sprints-col">
+          <div class="sprint-card">Sprint 1 (2 weeks) ➔ Code ready</div>
+          <div class="sprint-card">Sprint 2 (2 weeks) ➔ Code ready</div>
+          <div class="sprint-card">Sprint 3 (2 weeks) ➔ Code ready</div>
+          <div class="sprint-card">Sprint 4 (2 weeks) ➔ Code ready</div>
+        </div>
+        <div class="gate-barrier">
+          <img src="slides-assets/image20.png" alt="Lock icon" class="gate-lock-img">
+          <div class="gate-text">
+            <h3>Release Gate</h3>
+            <p>Ops: next release window in 3 months</p>
+          </div>
+          <div class="waiting-stack">
+            <span class="pile-tag">v1.4 waiting</span>
+            <span class="pile-tag">v1.5 waiting</span>
+            <span class="pile-tag">v1.6 waiting</span>
+          </div>
+          <span class="bottleneck-label">⚠️ Finished code piles up here</span>
+        </div>
+      </div>
+      <div class="quote-pill">
+        “Done” meant done coding, not running in front of users.
+      </div>
+      <footer class="slide-footer">
+        <span class="breadcrumb">Intro &bull; History &bull; DevOps &bull; CI &bull; CD &bull; Why now &bull; Demo &bull; Close</span>
+        <span class="slide-num">05 / 15</span>
+      </footer>
+    </article>
+
+    <!-- Slide 6 -->
+    <article class="slide" data-slide="6" data-notes="What does deployment actually mean? Code on your laptop is not production. Deployment means one specific tested version running where real users can reach it.">
+      <div class="section-label">02 &bull; WHAT DEPLOYMENT MEANS</div>
+      <h2 class="slide-title-hero">What does “deployment” actually mean?</h2>
+      <div class="deploy-stages-row">
+        <div class="d-card">
+          <img src="slides-assets/image21.png" alt="Code" class="d-icon">
+          <h4>Code</h4>
+          <p>your laptop</p>
+        </div>
+        <span class="arrow-blue">➔</span>
+        <div class="d-card">
+          <img src="slides-assets/image22.png" alt="Build" class="d-icon">
+          <h4>Build</h4>
+          <p>bundle or image</p>
+        </div>
+        <span class="arrow-blue">➔</span>
+        <div class="d-card">
+          <img src="slides-assets/image8.png" alt="Test" class="d-icon">
+          <h4>Test</h4>
+          <p>automated checks</p>
+        </div>
+        <span class="arrow-blue">➔</span>
+        <div class="d-card">
+          <img src="slides-assets/image23.png" alt="Artifact" class="d-icon">
+          <h4>Artifact</h4>
+          <p>versioned package</p>
+        </div>
+        <span class="arrow-blue">➔</span>
+        <div class="d-card">
+          <img src="slides-assets/image24.png" alt="Staging" class="d-icon">
+          <h4>Staging</h4>
+          <p>rehearsal</p>
+        </div>
+        <span class="arrow-blue">➔</span>
+        <div class="d-card card-prod-green">
+          <img src="slides-assets/image25.png" alt="Production" class="d-icon">
+          <h4>Production</h4>
+          <p>real users</p>
+        </div>
+      </div>
+      <div class="golden-rule-banner">
+        <h3>Deployment = one tested version, running where real users can reach it.</h3>
+        <p>Your laptop is not production. Something has to move the code there safely, every single time.</p>
+      </div>
+      <footer class="slide-footer">
+        <span class="breadcrumb">Intro &bull; History &bull; DevOps &bull; CI &bull; CD &bull; Why now &bull; Demo &bull; Close</span>
+        <span class="slide-num">06 / 15</span>
+      </footer>
+    </article>
+
+    <!-- Slide 7 -->
+    <article class="slide" data-slide="7" data-notes="DevOps tears down the wall between Dev ('Ship fast!') and Ops ('Don't break anything!'). One team, idea to production. DevOps is culture + automation + feedback.">
+      <div class="section-label">03 &bull; DEVOPS</div>
+      <h2 class="slide-title-hero">DevOps: tear down the wall</h2>
+      <div class="devops-split-view">
+        <div class="dev-box">
+          <h3>DEV</h3>
+          <p class="dev-motto">“Ship fast!”</p>
+        </div>
+        <div class="vs-wall">⚡ TEAR DOWN THE WALL ⚡</div>
+        <div class="ops-box">
+          <h3>OPS</h3>
+          <p class="ops-motto">“Don’t break anything!”</p>
+        </div>
+      </div>
+      <div class="devops-loop-card">
+        <h4>DEVOPS &bull; One team, idea ➔ production</h4>
+        <div class="loop-pills">
+          <span class="lp">Plan (Dev)</span>
+          <span class="lp">Code (Dev)</span>
+          <span class="lp lp-green">Build (Dev &bull; CI)</span>
+          <span class="lp lp-green">Test (Dev &bull; CI)</span>
+          <span class="lp lp-green">Release (Ops &bull; CD)</span>
+          <span class="lp lp-green">Deploy (Ops &bull; CD)</span>
+          <span class="lp">Operate (Ops)</span>
+          <span class="lp">Monitor (Ops)</span>
+        </div>
+        <p class="loop-caption">Culture + automation + feedback. <strong class="green-text">Green = the stages CI/CD automates.</strong></p>
+      </div>
+      <footer class="slide-footer">
+        <span class="breadcrumb">Intro &bull; History &bull; DevOps &bull; CI &bull; CD &bull; Why now &bull; Demo &bull; Close</span>
+        <span class="slide-num">07 / 15</span>
+      </footer>
+    </article>
+
+    <!-- Slide 8 -->
+    <article class="slide" data-slide="8" data-notes="Continuous Integration means developers merge small changes daily, built and tested in minutes. If it hurts, do it more often.">
+      <div class="section-label">04 &bull; CONTINUOUS INTEGRATION</div>
+      <h2 class="slide-title-hero">Merge small, merge often</h2>
+      <div class="ci-comparison-grid">
+        <div class="ci-bad-card">
+          <h3>WITHOUT CI</h3>
+          <p class="bad-sub">5 branches, 3 weeks apart, merged the night before</p>
+          <pre class="conflict-box">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+auth.service.ts
+=======
+auth.handler.ts
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; feature/auth</pre>
+          <p class="bad-outcome">💥 Conflicts everywhere. Nobody knows what broke.</p>
+        </div>
+        <div class="ci-good-card">
+          <h3>WITH CI</h3>
+          <p class="good-sub">Small changes, merged daily, built and tested in minutes</p>
+          <div class="pipeline-feed">
+            <div class="ci-pass-item"><code>a1f9 fix navbar</code> <span class="tag-green-pass">PASS &bull; 3m</span></div>
+            <div class="ci-pass-item"><code>7c2e add signup</code> <span class="tag-green-pass">PASS &bull; 4m</span></div>
+            <div class="ci-pass-item"><code>e4b0 update API</code> <span class="tag-green-pass">PASS &bull; 3m</span></div>
+            <div class="ci-pass-item"><code>93d1 tidy styles</code> <span class="tag-green-pass">PASS &bull; 2m</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="xp-quote">“If it hurts, do it more often.” — old Extreme Programming wisdom</div>
+      <footer class="slide-footer">
+        <span class="breadcrumb">Intro &bull; History &bull; DevOps &bull; CI &bull; CD &bull; Why now &bull; Demo &bull; Close</span>
+        <span class="slide-num">08 / 15</span>
+      </footer>
+    </article>
+
+    <!-- Slide 9 -->
+    <article class="slide" data-slide="9" data-notes="Quality gates: Nothing broken gets in. Lint checks style, unit tests check logic, build checks packaging, secret scan checks for leaked keys. Shift left catches bugs where they cost minutes.">
+      <div class="section-label">04 &bull; CONTINUOUS INTEGRATION</div>
+      <h2 class="slide-title-hero">Quality gates: nothing broken gets in</h2>
+      <div class="gates-row">
+        <div class="gate-step"><img src="slides-assets/image27.png" alt="Lint"><span>Lint</span><span class="gate-badge pass">PASS</span></div>
+        <div class="gate-step"><img src="slides-assets/image28.png" alt="Unit tests"><span>Unit tests</span><span class="gate-badge pass">PASS</span></div>
+        <div class="gate-step"><img src="slides-assets/image29.png" alt="Build"><span>Build</span><span class="gate-badge pass">PASS</span></div>
+        <div class="gate-step gate-fail"><img src="slides-assets/image30.png" alt="Secret scan"><span>Secret scan</span><span class="gate-badge fail">FAIL ⛔</span></div>
+        <div class="gate-blocked">❌ Merge Blocked</div>
+      </div>
+      <div class="pr-inspect-card">
+        <h4>Pull request #42 &bull; Add signup form</h4>
+        <div class="pr-checks-list">
+          <div>✔ Lint: passed</div>
+          <div>✔ Unit tests: 47 passed</div>
+          <div>✔ Build: passed</div>
+          <div class="text-danger">✖ Secret scan: 1 issue found (Stripe API key committed)</div>
+        </div>
+        <div class="merge-blocked-banner">Merging is blocked until it's fixed</div>
+      </div>
+      <div class="shift-left-box">
+        <strong>SHIFT LEFT: Catch bugs where they cost minutes, not weekends.</strong>
+        <p>A red build isn’t the developer failing. It’s the system doing its job.</p>
+      </div>
+      <footer class="slide-footer">
+        <span class="breadcrumb">Intro &bull; History &bull; DevOps &bull; CI &bull; CD &bull; Why now &bull; Demo &bull; Close</span>
+        <span class="slide-num">09 / 15</span>
+      </footer>
+    </article>
+
+    <!-- Slide 10 -->
+    <article class="slide" data-slide="10" data-notes="Continuous Delivery: Always ready to ship. Build once, deploy many. Same identical build in dev, staging, and prod. CI asks 'Does it work?'. CD asks 'Can we ship it right now?'.">
+      <div class="section-label">05 &bull; CONTINUOUS DELIVERY</div>
+      <h2 class="slide-title-hero">Continuous Delivery: always ready to ship</h2>
+      <p class="cd-subtitle">A human decides when to deploy</p>
+      <div class="cd-env-cards-row">
+        <div class="env-box">
+          <h4>DEV</h4>
+          <div class="build-tag">app:3f9c2a1</div>
+          <p>config: dev</p>
+        </div>
+        <span class="env-arrow">➔</span>
+        <div class="env-box">
+          <h4>STAGING</h4>
+          <div class="build-tag">app:3f9c2a1</div>
+          <p>config: staging</p>
+        </div>
+        <span class="env-arrow">➔</span>
+        <div class="env-box env-prod">
+          <h4>PRODUCTION</h4>
+          <div class="build-tag">app:3f9c2a1</div>
+          <p>config: prod</p>
+        </div>
+        <span class="env-arrow">➔</span>
+        <div class="deploy-btn-box">
+          <button type="button" class="btn-deploy-glow">🚀 DEPLOY</button>
+        </div>
+      </div>
+      <div class="cd-formula-grid">
+        <div class="cf-card"><strong>CI asks:</strong> “Does it work?”</div>
+        <div class="cf-card"><strong>CD asks:</strong> “Can we ship it right now?”</div>
+        <div class="cf-card highlight"><strong>The Rule:</strong> Build once, deploy many</div>
+      </div>
+      <footer class="slide-footer">
+        <span class="breadcrumb">Intro &bull; History &bull; DevOps &bull; CI &bull; CD &bull; Why now &bull; Demo &bull; Close</span>
+        <span class="slide-num">10 / 15</span>
+      </footer>
+    </article>
+
+    <!-- Slide 11 -->
+    <article class="slide" data-slide="11" data-notes="Who presses Dispatch? In Continuous Delivery, the food is packed and ready, but the manager taps Dispatch (human gate). In Continuous Deployment, the rider is auto-assigned the moment it is packed.">
+      <div class="section-label">05 &bull; CONTINUOUS DELIVERY VS DEPLOYMENT</div>
+      <h2 class="slide-title-hero">Who presses Dispatch?</h2>
+      <div class="delivery-vs-deployment-grid">
+        <div class="dvd-card">
+          <h3>CONTINUOUS DELIVERY</h3>
+          <p class="dvd-sub">Packed and ready. The manager taps Dispatch.</p>
+          <div class="dvd-chain">
+            <span>Build</span> ➔ <span>Test</span> ➔ <span>Staging</span> ➔ <span class="human-gate">👤 Human approves</span> ➔ <span>Production</span>
+          </div>
+          <div class="dvd-examples">
+            <strong>Keep a human gate:</strong>
+            <p>Banking &bull; Healthcare &bull; App stores</p>
+          </div>
+        </div>
+        <div class="dvd-card dvd-auto">
+          <h3>CONTINUOUS DEPLOYMENT</h3>
+          <p class="dvd-sub">A rider is auto-assigned the moment it’s packed.</p>
+          <div class="dvd-chain">
+            <span>Build</span> ➔ <span>Test</span> ➔ <span>Staging</span> ➔ <span class="auto-gate">⚡ Automatic</span> ➔ <span>Production</span>
+          </div>
+          <div class="dvd-examples">
+            <strong>Full automation, once earned:</strong>
+            <p>Web apps &bull; SaaS &bull; Internal tools</p>
+          </div>
+        </div>
+      </div>
+      <div class="summary-pill">Same pipeline. One difference: who approves the step to production.</div>
+      <footer class="slide-footer">
+        <span class="breadcrumb">Intro &bull; History &bull; DevOps &bull; CI &bull; CD &bull; Why now &bull; Demo &bull; Close</span>
+        <span class="slide-num">11 / 15</span>
+      </footer>
+    </article>
+
+    <!-- Slide 12 -->
+    <article class="slide" data-slide="12" data-notes="Why it matters: In 2025, 1 billion commits on GitHub, 11.5 billion Actions minutes. 90% of tech professionals use AI (DORA 2025). High throughput, high instability. Tests are how you trust AI.">
+      <div class="section-label">06 &bull; WHY IT MATTERS TODAY</div>
+      <h2 class="slide-title-hero">Why the industry depends on it</h2>
+      <div class="stats-counter-grid">
+        <div class="stat-box">
+          <span class="stat-number">~1B</span>
+          <span class="stat-label">commits pushed on GitHub in 2025</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-number">43.2M</span>
+          <span class="stat-label">pull requests merged every month</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-number">11.5B</span>
+          <span class="stat-label">GitHub Actions minutes in public repos</span>
+        </div>
+      </div>
+      <div class="ai-fde-cards-grid">
+        <div class="trend-card">
+          <h4>AI SPEED &bull; DORA 2025</h4>
+          <p><strong>90% of tech professionals use AI.</strong> Delivery throughput is up, and so is instability. If AI writes code, automated tests are how you trust it.</p>
+        </div>
+        <div class="trend-card">
+          <h4>FORWARD DEPLOYED ENGINEERS</h4>
+          <p>They get software running in customers' real systems. Deployment, pipelines, and safe rollouts are the core of the job.</p>
+        </div>
+      </div>
+      <div class="scale-summary">At this scale, checking and shipping by hand is simply impossible.</div>
+      <footer class="slide-footer">
+        <span class="breadcrumb">Intro &bull; History &bull; DevOps &bull; CI &bull; CD &bull; Why now &bull; Demo &bull; Close</span>
+        <span class="slide-num">12 / 15</span>
+      </footer>
+    </article>
+
+    <!-- Slide 13 -->
+    <article class="slide" data-slide="13" data-notes="When shipping goes wrong: July 2024 CrowdStrike crashed 8.5M Windows machines because one update went to everyone at once. Safer: Canary rollout. March 2025 tj-actions hijacked 23k repos. Safer: pin actions to SHA.">
+      <div class="section-label">06 &bull; WHY IT MATTERS TODAY</div>
+      <h2 class="slide-title-hero">When shipping goes wrong</h2>
+      <div class="incidents-grid">
+        <div class="incident-card">
+          <div class="incident-header">
+            <span class="badge-danger">JULY 2024 &bull; CROWDSTRIKE</span>
+            <h4>Global Windows Outage</h4>
+          </div>
+          <p>One faulty update went to every customer at once. About 8.5 million Windows machines crashed, grounding flights worldwide.</p>
+          <div class="canary-bar-demo">
+            <strong>Safer: A Canary Rollout</strong>
+            <div class="canary-segments">
+              <span class="seg s1">1%</span>
+              <span class="seg s2">10%</span>
+              <span class="seg s3">50%</span>
+              <span class="seg s4">100%</span>
+            </div>
+            <span class="lesson-tag">Lesson: Roll out gradually</span>
+          </div>
+        </div>
+        <div class="incident-card">
+          <div class="incident-header">
+            <span class="badge-danger">MARCH 2025 &bull; TJ-ACTIONS</span>
+            <h4>Pipeline Supply Chain Attack</h4>
+          </div>
+          <p>A GitHub Action used by 23,000+ repos was hijacked to quietly print secrets into build logs (CVE-2025-30066).</p>
+          <div class="security-checklist-demo">
+            <strong>Safer: Secure the Pipeline Itself</strong>
+            <ul>
+              <li>✔ Platform Secret Store</li>
+              <li>✔ Least Privilege Tokens</li>
+              <li>✔ Pin Actions to a Commit SHA</li>
+            </ul>
+            <span class="lesson-tag">Lesson: Guard the keys to production</span>
+          </div>
+        </div>
+      </div>
+      <footer class="slide-footer">
+        <span class="breadcrumb">Intro &bull; History &bull; DevOps &bull; CI &bull; CD &bull; Why now &bull; Demo &bull; Close</span>
+        <span class="slide-num">13 / 15</span>
+      </footer>
+    </article>
+
+    <!-- Slide 14 -->
+    <article class="slide" data-slide="14" data-notes="Live demo: One change, three ways. 1: By hand (chef delivers himself, skips tests, site broken). 2: The pipeline (tests fail, deploy skipped, phones stay safe). 3: AI agent follows AGENTS.md, human reviews, pipeline ships.">
+      <div class="section-label">07 &bull; LIVE DEMO</div>
+      <h2 class="slide-title-hero">Live demo: one change, three ways</h2>
+      <div class="demo-three-ways-grid">
+        <div class="demo-col">
+          <h4>1 &bull; BY HAND</h4>
+          <p class="col-sub">The chef delivers it himself</p>
+          <ol class="steps-list">
+            <li>01 Pull the latest code</li>
+            <li class="strike-text">02 Run the tests ← skipped!</li>
+            <li>03 Package the release</li>
+            <li>04 Copy files to server</li>
+            <li>05 Start web server</li>
+            <li class="fail-step">06 Open it: site is broken 💥</li>
+            <li>07 “Deployed!” on WhatsApp</li>
+          </ol>
+        </div>
+        <div class="demo-col demo-col-highlight">
+          <h4>2 &bull; THE PIPELINE</h4>
+          <p class="col-sub">Automated GitHub Actions</p>
+          <div class="pipeline-demo-steps">
+            <span class="p-step">git push</span>
+            <span class="p-step">Run tests</span>
+            <span class="p-step">Deploy</span>
+            <span class="p-step active-phone">Live on my phone</span>
+          </div>
+          <p class="pipeline-demo-text">Same bug: tests fail, deploy is skipped, phones stay safe. Fix it, push, live in ~1 min.</p>
+        </div>
+        <div class="demo-col">
+          <h4>3 &bull; AN AI AGENT</h4>
+          <p class="col-sub">The 2026 DevOps workflow</p>
+          <div class="ai-demo-steps">
+            <div><strong>REQ-001:</strong> add button</div>
+            <div>Agent follows <code>AGENTS.md</code></div>
+            <div>Developer reviews edits</div>
+            <div>Same pipeline ships it</div>
+          </div>
+        </div>
+      </div>
+      <div class="scoreboard-table">
+        <table>
+          <thead>
+            <tr><th>Metric</th><th>By Hand</th><th>CI/CD Pipeline</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Commands typed</td><td>7</td><td>1 (git push)</td></tr>
+            <tr><td>Did bug reach users?</td><td class="text-danger">Yes (Production broke)</td><td class="text-success">No: deploy skipped</td></tr>
+            <tr><td>Audit record</td><td>None</td><td class="text-success">Every run logged on page</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <footer class="slide-footer">
+        <span class="breadcrumb">Intro &bull; History &bull; DevOps &bull; CI &bull; CD &bull; Why now &bull; Demo &bull; Close</span>
+        <span class="slide-num">14 / 15</span>
+      </footer>
+    </article>
+
+    <!-- Slide 15 -->
+    <article class="slide" data-slide="15" data-notes="If shipping is instant, what is the new bottleneck? Deciding what to build, test quality, code review, security. When an AI agent ships a bug at 2 AM, who is accountable? The humans who set it up.">
+      <div class="section-label">FOOD FOR THOUGHT</div>
+      <div class="slide15-questions">
+        <h2>If shipping code becomes instant and free, what becomes the new bottleneck?</h2>
+        <h3 class="ai-accountability-q">And when an AI agent ships a bug at 2 AM, who is accountable?</h3>
+      </div>
+      <div class="round2-banner">
+        Round 2: In ONE word, what is CI/CD now? Shout it out!
+      </div>
+      <div class="speaker-signoff-card">
+        <div class="signoff-info">
+          <h3>Thank you</h3>
+          <p><strong>Venket Raj S</strong> &bull; Senior Software Engineer, Data & AI Automation</p>
+          <p class="homework-note">Homework: Try the demo from the repo, then add one GitHub Actions workflow to your own project.</p>
+        </div>
+        <div class="signoff-qrs">
+          <div class="qr-item">
+            <img src="slides-assets/image38.png" alt="LinkedIn QR">
+            <span>Connect on LinkedIn</span>
+          </div>
+          <div class="qr-item">
+            <img src="slides-assets/image39.png" alt="Demo Repo QR">
+            <span>Slides + Demo Repo</span>
+          </div>
+        </div>
+      </div>
+      <footer class="slide-footer">
+        <span class="breadcrumb">Intro &bull; History &bull; DevOps &bull; CI &bull; CD &bull; Why now &bull; Demo &bull; Close</span>
+        <span class="slide-num">15 / 15</span>
+      </footer>
+    </article>
+
+  </main>
+
+  <!-- Speaker Notes Drawer (Toggled with S key or button) -->
+  <aside id="notes-drawer" class="notes-drawer">
+    <div class="notes-header">
+      <span class="notes-title">🎙️ Speaker Notes / Presentation Script</span>
+      <button type="button" id="close-notes-btn" class="btn-close-notes">✕</button>
+    </div>
+    <div id="notes-content" class="notes-content">
+      <!-- Injected dynamically based on active slide -->
+    </div>
+  </aside>
+
+  <script src="slides.js"></script>
+</body>
+</html>

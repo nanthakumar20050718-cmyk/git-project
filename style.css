@@ -92,6 +92,26 @@ body {
   margin-top: 2px;
 }
 
+.btn-slides-link {
+  background-color: rgba(59, 130, 246, 0.2);
+  border: 1px solid #3b82f6;
+  color: #93c5fd;
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  transition: all 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-slides-link:hover {
+  background-color: #3b82f6;
+  color: #ffffff;
+}
+
 .deployed-badge {
   background-color: var(--green-success);
   color: #ffffff;
