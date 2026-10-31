@@ -1,16 +1,10 @@
 /**
  * CI/CD Demo - To-Do List Application
- * Matches the Visual Pitch Deck Design & Functional Requirements
+ * Matches the Visual Pitch Deck Design + Confetti & Build Details Drawer
  */
 
 // Core Data Operations (Pure Functions for testing and reusability)
 const TodoLogic = {
-  /**
-   * Creates a new todo item object
-   * @param {string} text - Title of the task
-   * @param {boolean} completed - Initial completion state
-   * @returns {Object} New task object
-   */
   createTask(text, completed = false) {
     const trimmed = (text || '').trim();
     if (!trimmed) {
@@ -24,45 +18,21 @@ const TodoLogic = {
     };
   },
 
-  /**
-   * Adds a task to the task list
-   * @param {Array} tasks - Current list of tasks
-   * @param {string} text - Text of the task to add
-   * @returns {Array} Updated list of tasks
-   */
   addTask(tasks, text) {
     const newTask = this.createTask(text);
     return [newTask, ...tasks];
   },
 
-  /**
-   * Toggles completion status of a task by ID
-   * @param {Array} tasks - Current list of tasks
-   * @param {string} id - Task ID to toggle
-   * @returns {Array} Updated list of tasks
-   */
   toggleTask(tasks, id) {
     return tasks.map(task => 
       task.id === id ? { ...task, completed: !task.completed } : task
     );
   },
 
-  /**
-   * Deletes a task by ID
-   * @param {Array} tasks - Current list of tasks
-   * @param {string} id - Task ID to delete
-   * @returns {Array} Updated list of tasks
-   */
   deleteTask(tasks, id) {
     return tasks.filter(task => task.id !== id);
   },
 
-  /**
-   * Filters tasks based on criteria ('all', 'active', 'completed')
-   * @param {Array} tasks - Current list of tasks
-   * @param {string} filter - Filter type
-   * @returns {Array} Filtered list of tasks
-   */
   filterTasks(tasks, filter = 'all') {
     switch (filter) {
       case 'active':
@@ -75,11 +45,6 @@ const TodoLogic = {
     }
   },
 
-  /**
-   * Calculates statistics for tasks
-   * @param {Array} tasks 
-   * @returns {Object} { total, active, completed }
-   */
   getStats(tasks) {
     const total = tasks.length;
     const completed = tasks.filter(t => t.completed).length;
@@ -88,11 +53,10 @@ const TodoLogic = {
   }
 };
 
-// Browser DOM Controller
+// Browser DOM Controller & Interactive Features
 if (typeof window !== 'undefined') {
   const STORAGE_KEY = 'todo_cicd_demo_tasks_v2';
 
-  // Default tasks matching the screenshot sample
   const DEFAULT_TASKS = [
     { id: 'task_default_1', text: 'Learn CI/CD with GitHub Actions', completed: true },
     { id: 'task_default_2', text: 'Build a To-Do List Project', completed: false },
@@ -100,14 +64,23 @@ if (typeof window !== 'undefined') {
   ];
 
   let tasks = [];
+  let currentFilter = 'all';
 
   // DOM Elements
   const todoForm = document.getElementById('todo-form');
   const todoInput = document.getElementById('todo-input');
   const todoList = document.getElementById('todo-list');
   const taskStats = document.getElementById('task-stats');
+  const filterPills = document.querySelectorAll('.filter-pill');
+  const celebrationBanner = document.getElementById('celebration-banner');
+  const confettiCanvas = document.getElementById('confetti-canvas');
 
-  // Load from LocalStorage
+  // Modal Elements
+  const buildModal = document.getElementById('build-modal');
+  const closeModalBtn = document.getElementById('close-modal-btn');
+  const deploymentNoticeCard = document.getElementById('deployment-notice-card');
+  const openInfoBadge = document.getElementById('open-info-badge');
+
   function loadTasks() {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
@@ -123,7 +96,6 @@ if (typeof window !== 'undefined') {
     }
   }
 
-  // Save to LocalStorage
   function saveTasks() {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
@@ -132,11 +104,11 @@ if (typeof window !== 'undefined') {
     }
   }
 
-  // Render UI matching the screenshot
   function render() {
+    const filtered = TodoLogic.filterTasks(tasks, currentFilter);
     todoList.innerHTML = '';
 
-    tasks.forEach(task => {
+    filtered.forEach(task => {
       const li = document.createElement('li');
       li.className = `todo-item ${task.completed ? 'completed' : ''}`;
       li.dataset.id = task.id;
@@ -156,12 +128,12 @@ if (typeof window !== 'undefined') {
         </div>
       `;
 
-      // Event: Toggle on clicking the left portion
       const leftSection = li.querySelector('.todo-left');
       const toggle = () => {
         tasks = TodoLogic.toggleTask(tasks, task.id);
         saveTasks();
         render();
+        checkCelebration();
       };
 
       leftSection.addEventListener('click', toggle);
@@ -172,22 +144,38 @@ if (typeof window !== 'undefined') {
         }
       });
 
-      // Event: Delete on clicking the trash icon
       const deleteBtn = li.querySelector('.btn-delete');
       deleteBtn.addEventListener('click', (e) => {
         e.stopPropagation();
         tasks = TodoLogic.deleteTask(tasks, task.id);
         saveTasks();
         render();
+        checkCelebration();
       });
 
       todoList.appendChild(li);
     });
 
-    // Update accessible stats
+    // Update stats text
+    const stats = TodoLogic.getStats(tasks);
     if (taskStats) {
-      const stats = TodoLogic.getStats(tasks);
-      taskStats.textContent = `${stats.active} task${stats.active === 1 ? '' : 's'} remaining`;
+      taskStats.textContent = `${stats.active} pending`;
+    }
+
+    // Toggle Celebration Banner
+    if (celebrationBanner) {
+      if (tasks.length > 0 && stats.active === 0) {
+        celebrationBanner.style.display = 'flex';
+      } else {
+        celebrationBanner.style.display = 'none';
+      }
+    }
+  }
+
+  function checkCelebration() {
+    const stats = TodoLogic.getStats(tasks);
+    if (tasks.length > 0 && stats.active === 0) {
+      fireConfetti();
     }
   }
 
@@ -197,7 +185,68 @@ if (typeof window !== 'undefined') {
     return div.innerHTML;
   }
 
-  // Form submit handler
+  // Confetti Animation (Zero-dependency Canvas particle system)
+  function fireConfetti() {
+    if (!confettiCanvas) return;
+    const ctx = confettiCanvas.getContext('2d');
+    confettiCanvas.width = window.innerWidth;
+    confettiCanvas.height = window.innerHeight;
+
+    const colors = ['#2563eb', '#16a34a', '#f59e0b', '#ec4899', '#8b5cf6', '#06b6d4'];
+    const particles = [];
+    const count = 80;
+
+    for (let i = 0; i < count; i++) {
+      particles.push({
+        x: window.innerWidth / 2,
+        y: window.innerHeight / 2,
+        w: Math.random() * 8 + 4,
+        h: Math.random() * 8 + 4,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        vx: (Math.random() - 0.5) * 16,
+        vy: (Math.random() - 0.7) * 16,
+        rotation: Math.random() * 360,
+        vr: (Math.random() - 0.5) * 10,
+        gravity: 0.35,
+        opacity: 1
+      });
+    }
+
+    let frame = 0;
+    function animate() {
+      ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+      let alive = false;
+
+      particles.forEach(p => {
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += p.gravity;
+        p.rotation += p.vr;
+        p.opacity -= 0.012;
+
+        if (p.opacity > 0) {
+          alive = true;
+          ctx.save();
+          ctx.translate(p.x, p.y);
+          ctx.rotate((p.rotation * Math.PI) / 180);
+          ctx.fillStyle = p.color;
+          ctx.globalAlpha = Math.max(0, p.opacity);
+          ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+          ctx.restore();
+        }
+      });
+
+      frame++;
+      if (alive && frame < 120) {
+        requestAnimationFrame(animate);
+      } else {
+        ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+      }
+    }
+    requestAnimationFrame(animate);
+  }
+
+  // Form submission
   todoForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const text = todoInput.value;
@@ -209,6 +258,39 @@ if (typeof window !== 'undefined') {
     } catch (err) {
       alert(err.message);
     }
+  });
+
+  // Filter Buttons
+  filterPills.forEach(pill => {
+    pill.addEventListener('click', () => {
+      filterPills.forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+      currentFilter = pill.dataset.filter;
+      render();
+    });
+  });
+
+  // Modal Open/Close handlers
+  function openModal() {
+    if (buildModal) buildModal.classList.add('open');
+  }
+
+  function closeModal() {
+    if (buildModal) buildModal.classList.remove('open');
+  }
+
+  if (deploymentNoticeCard) deploymentNoticeCard.addEventListener('click', openModal);
+  if (openInfoBadge) openInfoBadge.addEventListener('click', openModal);
+  if (closeModalBtn) closeModalBtn.addEventListener('click', closeModal);
+
+  if (buildModal) {
+    buildModal.addEventListener('click', (e) => {
+      if (e.target === buildModal) closeModal();
+    });
+  }
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeModal();
   });
 
   // Initial load
