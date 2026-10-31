@@ -1,8 +1,8 @@
 # 📋 To-Do List Application with CI/CD Pipeline
 
-[![CI/CD Pipeline](https://github.com/USER_NAME/REPO_NAME/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/USER_NAME/REPO_NAME/actions)
+[![CI/CD Pipeline](https://github.com/nanthakumar20050718-cmyk/todo-list-cicd/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/nanthakumar20050718-cmyk/todo-list-cicd/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![GitHub Pages](https://img.shields.io/badge/Hosted%20With-GitHub%20Pages-181717?logo=github)](https://USER_NAME.github.io/REPO_NAME/)
+[![GitHub Pages](https://img.shields.io/badge/Hosted%20With-GitHub%20Pages-181717?logo=github)](https://nanthakumar20050718-cmyk.github.io/todo-list-cicd/)
 
 An automated Continuous Integration and Continuous Deployment (CI/CD) implementation for a responsive **To-Do List Web Application** using **GitHub Actions** and **GitHub Pages**.
 
@@ -141,7 +141,7 @@ git commit -m "feat: complete to-do list app with automated CI/CD pipeline"
 ### 2. Connect to Your GitHub Repository
 Create a new repository on [GitHub](https://github.com/new) (e.g. `todo-list-cicd`), then run:
 ```bash
-git remote add origin https://github.com/<YOUR_GITHUB_USERNAME>/<YOUR_REPO_NAME>.git
+git remote add origin https://github.com/nanthakumar20050718-cmyk/todo-list-cicd.git
 git push -u origin main
 ```
 
@@ -150,7 +150,7 @@ git push -u origin main
 2. Under **Build and deployment** -> **Source**, select **GitHub Actions**.
 3. Push any commit or trigger the workflow under the **Actions** tab.
 4. Once completed, your application will be live at:
-   `https://<YOUR_GITHUB_USERNAME>.github.io/<YOUR_REPO_NAME>/`
+   `https://nanthakumar20050718-cmyk.github.io/todo-list-cicd/`
 
 ---
 
@@ -164,3 +164,4 @@ git push -u origin main
 - [x] Test stage runs on every pull request and push to `main`.
 - [x] Deployment stage automatically publishes to GitHub Pages on `main`.
 - [x] Comprehensive documentation provided in `README.md`.
+
