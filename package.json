@@ -1,0 +1,20 @@
+{
+  "name": "todo-list-cicd",
+  "version": "1.0.0",
+  "description": "Simple To-Do List Web Application with Automated CI/CD using GitHub Actions and GitHub Pages",
+  "main": "app.js",
+  "scripts": {
+    "test": "node --test tests/*.test.js",
+    "lint": "node -c app.js tests/*.test.js",
+    "build": "node -e \"const fs = require('fs'); ['index.html', 'style.css', 'app.js'].forEach(f => { if (!fs.existsSync(f)) throw new Error('Missing file: ' + f); }); console.log('Build validation passed: All essential assets present.');\""
+  },
+  "keywords": [
+    "todo",
+    "cicd",
+    "github-actions",
+    "devops",
+    "github-pages"
+  ],
+  "author": "Nanthakumar",
+  "license": "MIT"
+}

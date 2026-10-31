@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Simple To-Do List Web Application with automated CI/CD pipeline">
+  <title>To-Do List App | CI/CD in Action</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✅</text></svg>">
+</head>
+<body>
+  <div class="container">
+    <header class="app-header">
+      <div class="badge">CI/CD Automated Deployment</div>
+      <h1>My To-Do List</h1>
+      <p class="subtitle">Built with HTML, CSS, JavaScript & GitHub Actions</p>
+    </header>
+
+    <main class="todo-card">
+      <form id="todo-form" class="todo-form" aria-label="Add a task">
+        <input 
+          type="text" 
+          id="todo-input" 
+          class="todo-input" 
+          placeholder="What do you need to do today?" 
+          autocomplete="off"
+          required
+          aria-label="New task title"
+        >
+        <button type="submit" id="add-btn" class="btn btn-primary">
+          <span class="btn-icon">+</span> Add Task
+        </button>
+      </form>
+
+      <div class="filters-bar" aria-label="Task filters">
+        <div class="filter-buttons">
+          <button type="button" class="filter-btn active" data-filter="all">All</button>
+          <button type="button" class="filter-btn" data-filter="active">Active</button>
+          <button type="button" class="filter-btn" data-filter="completed">Completed</button>
+        </div>
+        <div class="stats" id="task-stats" aria-live="polite">0 tasks remaining</div>
+      </div>
+
+      <ul id="todo-list" class="todo-list" aria-label="List of tasks">
+        <!-- Tasks dynamically inserted here -->
+      </ul>
+
+      <div id="empty-state" class="empty-state">
+        <div class="empty-icon">📝</div>
+        <p>No tasks found. Add a task to get started!</p>
+      </div>
+
+      <footer class="card-footer">
+        <button type="button" id="clear-completed-btn" class="btn btn-secondary">Clear Completed</button>
+      </footer>
+    </main>
+
+    <footer class="app-footer">
+      <p>Automated CI/CD Pipeline Demo &bull; Deployed via <strong>GitHub Pages</strong></p>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
